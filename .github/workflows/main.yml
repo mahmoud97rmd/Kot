@@ -1,20 +1,15 @@
-name: Android CI Build
+name: Android CI (Debug)
 
 on:
   push:
-    branches: [ "main", "master" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "main", "master" ]
+    branches: [ "main" ]
   workflow_dispatch:
-
-concurrency:
-  group: android-ci-${{ github.ref }}
-  cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
 
     steps:
       - name: Checkout
@@ -23,45 +18,24 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
-          distribution: "temurin"
+          distribution: temurin
           java-version: "17"
-          cache: "gradle"
+          cache: gradle
 
       - name: Validate Gradle Wrapper
         uses: gradle/wrapper-validation-action@v2
 
-      - name: Make gradlew executable
+      - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
-      # Optional: Print versions to help debugging
-      - name: Environment info
-        run: |
-          java -version
-          ./gradlew -v
+      - name: Gradle info
+        run: ./gradlew -v
 
       - name: Build Debug APK
         run: ./gradlew :app:assembleDebug --stacktrace
 
-      # Release APK (unsigned) - useful for CI sanity; remove if you don't want it.
-      - name: Build Release APK (unsigned)
-        run: ./gradlew :app:assembleRelease --stacktrace
-
-      - name: Collect APKs
-        run: |
-          mkdir -p artifacts
-          # Debug APK
-          if ls app/build/outputs/apk/debug/*.apk 1> /dev/null 2>&1; then
-            cp -v app/build/outputs/apk/debug/*.apk artifacts/
-          fi
-          # Release APK (unsigned)
-          if ls app/build/outputs/apk/release/*.apk 1> /dev/null 2>&1; then
-            cp -v app/build/outputs/apk/release/*.apk artifacts/
-          fi
-          ls -la artifacts || true
-
-      - name: Upload APK artifacts
+      - name: Upload Debug APK
         uses: actions/upload-artifact@v4
         with:
-          name: MetaTraderClone-APKs
-          path: artifacts/*.apk
-          if-no-files-found: error
+          name: app-debug
+          path: app/build/outputs/apk/debug/*.apk
