@@ -6,8 +6,11 @@ import com.tradingapp.metatrader.domain.models.trading.PendingOrder
 import com.tradingapp.metatrader.domain.models.trading.Position
 import com.tradingapp.metatrader.domain.models.trading.TradingEvent
 import kotlinx.coroutines.flow.Flow
+import com.tradingapp.metatrader.domain.models.trading.Trade
 
 interface TradingRepository {
+    fun observeTradeHistory(): Flow<List<Trade>>
+
     fun observeAccount(): Flow<AccountSnapshot>
     fun observeOpenPositions(): Flow<List<Position>>
     fun observeHistory(): Flow<List<ClosedTrade>>
