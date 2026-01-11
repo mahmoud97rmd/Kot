@@ -1,6 +1,6 @@
 package com.tradingapp.metatrader.domain.usecases.backtest
 
-import com.tradingapp.metatrader.core.backtest.BacktestEngine
+import com.tradingapp.metatrader.domain.backtest.BacktestEngine
 import com.tradingapp.metatrader.domain.backtest.BacktestStrategy
 import com.tradingapp.metatrader.domain.models.backtest.BacktestCandle
 import com.tradingapp.metatrader.domain.models.backtest.BacktestConfig
@@ -15,9 +15,10 @@ class RunBacktestUseCase @Inject constructor() {
         config: BacktestConfig,
         onProgress: ((BacktestEngine.Progress) -> Unit)? = null
     ): BacktestResult {
-        return BacktestEngine(config).run(
+        return BacktestEngine().run(
             candles = candles,
             strategy = strategy,
+            config = config,
             onProgress = onProgress
         )
     }

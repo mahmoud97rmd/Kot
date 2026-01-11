@@ -1,5 +1,7 @@
 package com.tradingapp.metatrader.domain.repository
 
+import com.tradingapp.metatrader.domain.models.trading.Trade
+
 import com.tradingapp.metatrader.domain.models.trading.AccountSnapshot
 import com.tradingapp.metatrader.domain.models.trading.ClosedTrade
 import com.tradingapp.metatrader.domain.models.trading.PendingOrder
@@ -41,4 +43,8 @@ interface TradingRepository {
     suspend fun modifyPendingOrder(orderId: String, newTarget: Double, newSl: Double?, newTp: Double?)
 
     suspend fun closePosition(positionId: String, price: Double)
+
+    /** Backwards-compat alias */
+    fun observeTradeHistory(): Flow<List<Trade>>
+
 }

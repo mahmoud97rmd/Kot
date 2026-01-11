@@ -1,5 +1,7 @@
 package com.tradingapp.metatrader.data.repository
 
+import kotlinx.coroutines.flow.flowOf
+
 import com.tradingapp.metatrader.core.engine.trading.TradingEngine
 import com.tradingapp.metatrader.data.local.database.dao.ClosedTradeDao
 import com.tradingapp.metatrader.data.local.database.dao.PendingOrderDao
@@ -61,11 +63,12 @@ class TradingRepositoryImpl(
                     }
                     is TradingEngine.Event.PendingCanceled -> {
                         pendingDao.delete(ev.orderId)
-                        _events.tryEmit(TradingEvent.PendingCanceled(ev.orderId))
                     }
                     is TradingEngine.Event.PendingTriggered -> {
                         pendingDao.delete(ev.orderId)
-                        _events.tryEmit(TradingEvent.PendingTriggered(ev.orderId, ev.openedPositionId))
+                        
+      _events.tryEmit(TradingEvent.PendingTriggered(orderId = ev.orderId.id.id, openedPositionId = ev.openedPositionId, triggerTime = Instant.now()))
+    
                     }
 
                     is TradingEngine.Event.AccountUpdated -> Unit
@@ -130,4 +133,6 @@ class TradingRepositoryImpl(
     override fun onTick(time: Instant, bid: Double, ask: Double) {
         engine.onTick(time, bid, ask)
     }
+
+    override fun observeTradeHistory(): Flow<List<Trade>> = flowOf(emptyList())
 }

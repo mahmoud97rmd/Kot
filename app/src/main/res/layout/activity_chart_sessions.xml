@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="Create & switch chart sessions (MT5-style)"
+        android:text="Create &amp; switch chart sessions (MT5-style)"
         android:textColor="#8aa0c6"/>
 
     <Button

@@ -329,7 +329,7 @@ dependencies {
     implementation("io.ktor:ktor-client-okhttp:2.3.12")
     implementation("io.ktor:ktor-client-websockets:2.3.12")
     implementation("io.ktor:ktor-client-content-negotiation:2.3.12")
-    implementation("io.ktor:ktor-serialization-moshi:2.3.12")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.12")
 
     // Room
     implementation("androidx.room:room-runtime:2.6.1")

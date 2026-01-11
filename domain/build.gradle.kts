@@ -20,6 +20,5 @@ android {
 
 dependencies {
     implementation("javax.inject:javax.inject:1")
-    implementation(project(":core"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0")
 }
