@@ -1,0 +1,20 @@
+package com.tradingapp.metatrader.app.data.local.database.dao
+
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import com.tradingapp.metatrader.app.data.local.database.entities.DrawingEntity
+
+@Dao
+interface DrawingDao {
+
+    @Query("SELECT * FROM drawings WHERE symbol = :symbol AND timeframe = :timeframe ORDER BY updatedAtMs ASC")
+    suspend fun load(symbol: String, timeframe: String): List<DrawingEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun upsertAll(items: List<DrawingEntity>)
+
+    @Query("DELETE FROM drawings WHERE symbol = :symbol AND timeframe = :timeframe")
+    suspend fun deleteForChart(symbol: String, timeframe: String)
+}

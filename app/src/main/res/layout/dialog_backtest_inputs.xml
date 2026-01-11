@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#0b1220">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="14dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Inputs"
+            android:textColor="#d1d4dc"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Strategy"
+            android:textColor="#8aa0c6"
+            android:layout_marginTop="10dp"/>
+
+        <Spinner
+            android:id="@+id/strategySpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#121a2b"
+            android:padding="10dp"
+            android:layout_marginTop="6dp"/>
+
+        <!-- EMA group -->
+        <LinearLayout
+            android:id="@+id/groupEma"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp">
+
+            <EditText
+                android:id="@+id/emaFastInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="EMA Fast (e.g. 10)"
+                android:inputType="number"
+                android:background="#121a2b"
+                android:textColor="#d1d4dc"
+                android:padding="12dp"/>
+
+            <EditText
+                android:id="@+id/emaSlowInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="EMA Slow (e.g. 30)"
+                android:inputType="number"
+                android:background="#121a2b"
+                android:textColor="#d1d4dc"
+                android:padding="12dp"
+                android:layout_marginTop="10dp"/>
+        </LinearLayout>
+
+        <!-- RSI group -->
+        <LinearLayout
+            android:id="@+id/groupRsi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/rsiPeriodInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="RSI Period (e.g. 14)"
+                android:inputType="number"
+                android:background="#121a2b"
+                android:textColor="#d1d4dc"
+                android:padding="12dp"/>
+
+            <EditText
+                android:id="@+id/rsiOversoldInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="RSI Oversold (e.g. 30)"
+                android:inputType="numberDecimal"
+                android:background="#121a2b"
+                android:textColor="#d1d4dc"
+                android:padding="12dp"
+                android:layout_marginTop="10dp"/>
+
+            <EditText
+                android:id="@+id/rsiOverboughtInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="RSI Overbought (e.g. 70)"
+                android:inputType="numberDecimal"
+                android:background="#121a2b"
+                android:textColor="#d1d4dc"
+                android:padding="12dp"
+                android:layout_marginTop="10dp"/>
+        </LinearLayout>
+
+        <!-- Stochastic group -->
+        <LinearLayout
+            android:id="@+id/groupStoch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/stochKInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Stoch K (e.g. 14)"
+                android:inputType="number"
+                android:background="#121a2b"
+                android:textColor="#d1d4dc"
+                android:padding="12dp"/>
+
+            <EditText
+                android:id="@+id/stochDInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Stoch D (e.g. 3)"
+                android:inputType="number"
+                android:background="#121a2b"
+                android:textColor="#d1d4dc"
+                android:padding="12dp"
+                android:layout_marginTop="10dp"/>
+
+            <EditText
+                android:id="@+id/stochOversoldInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Stoch Oversold (e.g. 20)"
+                android:inputType="numberDecimal"
+                android:background="#121a2b"
+                android:textColor="#d1d4dc"
+                android:padding="12dp"
+                android:layout_marginTop="10dp"/>
+
+            <EditText
+                android:id="@+id/stochOverboughtInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Stoch Overbought (e.g. 80)"
+                android:inputType="numberDecimal"
+                android:background="#121a2b"
+                android:textColor="#d1d4dc"
+                android:padding="12dp"
+                android:layout_marginTop="10dp"/>
+        </LinearLayout>
+
+        <!-- common -->
+        <EditText
+            android:id="@+id/lotsInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Lots (e.g. 1.0)"
+            android:inputType="numberDecimal"
+            android:background="#121a2b"
+            android:textColor="#d1d4dc"
+            android:padding="12dp"
+            android:layout_marginTop="12dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Execution / Account"
+            android:textColor="#8aa0c6"
+            android:layout_marginTop="14dp"/>
+
+        <EditText
+            android:id="@+id/initialBalanceInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Initial Balance (e.g. 10000)"
+            android:inputType="numberDecimal"
+            android:background="#121a2b"
+            android:textColor="#d1d4dc"
+            android:padding="12dp"
+            android:layout_marginTop="10dp"/>
+
+        <EditText
+            android:id="@+id/commissionInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Commission per lot (e.g. 0.0)"
+            android:inputType="numberDecimal"
+            android:background="#121a2b"
+            android:textColor="#d1d4dc"
+            android:padding="12dp"
+            android:layout_marginTop="10dp"/>
+
+        <EditText
+            android:id="@+id/spreadPointsInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Spread points (e.g. 2.0)"
+            android:inputType="numberDecimal"
+            android:background="#121a2b"
+            android:textColor="#d1d4dc"
+            android:padding="12dp"
+            android:layout_marginTop="10dp"/>
+
+        <EditText
+            android:id="@+id/slippagePointsInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Slippage points (e.g. 0.5)"
+            android:inputType="numberDecimal"
+            android:background="#121a2b"
+            android:textColor="#d1d4dc"
+            android:padding="12dp"
+            android:layout_marginTop="10dp"/>
+
+        <EditText
+            android:id="@+id/pointValueInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Point value (e.g. 0.01)"
+            android:inputType="numberDecimal"
+            android:background="#121a2b"
+            android:textColor="#d1d4dc"
+            android:padding="12dp"
+            android:layout_marginTop="10dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="14dp">
+
+            <Button
+                android:id="@+id/cancelBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Cancel"/>
+
+            <Button
+                android:id="@+id/saveBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Save"
+                android:layout_marginStart="10dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

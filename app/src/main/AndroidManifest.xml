@@ -1,0 +1,68 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:name="com.tradingapp.metatrader.app.MyApplication"
+        android:allowBackup="true"
+        android:label="MetaTrader Clone"
+        android:supportsRtl="true">
+
+        <activity
+            android:name="com.tradingapp.metatrader.app.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+    </application>
+</manifest>
+
+<!-- Foreground service (Android 9+) -->
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+
+        <service
+            android:name=".notifications.TradingForegroundService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+
+
+        <activity android:name=".features.backtest.BacktestActivity" />
+
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+
+        <activity
+            android:name=".app.features.backtest.BacktestActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.tradingapp.metatrader.app.core.journal.ui.LiveJournalActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.tradingapp.metatrader.app.features.oanda.settings.ui.OandaSettingsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.tradingapp.metatrader.app.features.chart.ChartActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.tradingapp.metatrader.app.features.backtest.trades.BacktestTradesActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.tradingapp.metatrader.app.features.sessions.ui.ChartSessionsActivity"
+            android:exported="false" />

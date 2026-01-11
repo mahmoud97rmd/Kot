@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#0b1220">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="14dp">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Trade Ticket"
+            android:textColor="#d1d4dc"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/liveLine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Live: --"
+            android:textColor="#8aa0c6"
+            android:layout_marginTop="8dp"/>
+
+        <EditText
+            android:id="@+id/instrumentInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Instrument"
+            android:background="#121a2b"
+            android:textColor="#d1d4dc"
+            android:padding="12dp"
+            android:layout_marginTop="10dp"/>
+
+        <Spinner
+            android:id="@+id/orderTypeSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#121a2b"
+            android:layout_marginTop="10dp"/>
+
+        <EditText
+            android:id="@+id/targetPriceInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Target Price (pending only)"
+            android:inputType="numberDecimal"
+            android:background="#121a2b"
+            android:textColor="#d1d4dc"
+            android:padding="12dp"
+            android:layout_marginTop="10dp"/>
+
+        <EditText
+            android:id="@+id/lotsInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Lots"
+            android:text="1.0"
+            android:inputType="numberDecimal"
+            android:background="#121a2b"
+            android:textColor="#d1d4dc"
+            android:padding="12dp"
+            android:layout_marginTop="10dp"/>
+
+        <EditText
+            android:id="@+id/slInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Stop Loss (optional)"
+            android:inputType="numberDecimal"
+            android:background="#121a2b"
+            android:textColor="#d1d4dc"
+            android:padding="12dp"
+            android:layout_marginTop="10dp"/>
+
+        <EditText
+            android:id="@+id/tpInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Take Profit (optional)"
+            android:inputType="numberDecimal"
+            android:background="#121a2b"
+            android:textColor="#d1d4dc"
+            android:padding="12dp"
+            android:layout_marginTop="10dp"/>
+
+        <!-- Risk Management -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Risk Management"
+            android:textColor="#d1d4dc"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp"/>
+
+        <EditText
+            android:id="@+id/riskPercentInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Risk % (e.g., 1)"
+            android:text="1"
+            android:inputType="numberDecimal"
+            android:background="#121a2b"
+            android:textColor="#d1d4dc"
+            android:padding="12dp"
+            android:layout_marginTop="10dp"/>
+
+        <EditText
+            android:id="@+id/balanceInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Balance (for calc)"
+            android:text="10000"
+            android:inputType="numberDecimal"
+            android:background="#121a2b"
+            android:textColor="#d1d4dc"
+            android:padding="12dp"
+            android:layout_marginTop="10dp"/>
+
+        <Button
+            android:id="@+id/calcLotsBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Calculate Lots from Risk"
+            android:layout_marginTop="10dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp">
+
+            <Button
+                android:id="@+id/buyBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="BUY"/>
+
+            <Button
+                android:id="@+id/sellBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="SELL"
+                android:layout_marginStart="10dp"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/statusText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Status: idle"
+            android:textColor="#8aa0c6"
+            android:layout_marginTop="12dp"/>
+
+    </LinearLayout>
+</ScrollView>

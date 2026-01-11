@@ -1,0 +1,27 @@
+package com.tradingapp.metatrader.app.data.local.database.entities
+
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "drawings")
+data class DrawingEntity(
+    @PrimaryKey val id: String,
+
+    val symbol: String,
+    val timeframe: String,
+
+    // "TREND" | "HLINE"
+    val type: String,
+
+    // anchors for trend
+    val aTimeSec: Long? = null,
+    val aPrice: Double? = null,
+    val bTimeSec: Long? = null,
+    val bPrice: Double? = null,
+
+    // for hline
+    val price: Double? = null,
+
+    val createdAtMs: Long,
+    val updatedAtMs: Long
+)

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:background="#0b1220">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="XAU_USD BUY"
+        android:textColor="#d1d4dc"
+        android:textSize="15sp"/>
+
+    <TextView
+        android:id="@+id/sub"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Entry -- Exit --"
+        android:textColor="#8aa0c6"
+        android:layout_marginTop="4dp"/>
+
+    <TextView
+        android:id="@+id/pnl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="+0.00"
+        android:textColor="#26a69a"
+        android:layout_marginTop="6dp"/>
+</LinearLayout>

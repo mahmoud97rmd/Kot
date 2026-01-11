@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0b1220"
+    android:orientation="vertical">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:orientation="horizontal"
+        android:background="#121a2b">
+
+        <TextView
+            android:id="@+id/symbolText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="XAU_USD"
+            android:textColor="#d1d4dc"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/priceText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="--"
+            android:textColor="#4da3ff"
+            android:textSize="16sp"
+            android:layout_marginEnd="10dp"/>
+
+        <Button
+            android:id="@+id/autoBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AUTO: OFF"/>
+    </LinearLayout>
+
+    <!-- Trading Panel -->
+    <LinearLayout
+        android:id="@+id/tradingPanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="#0f172a"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/sessionText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Market: --"
+                android:textColor="#8aa0c6"/>
+
+            <Button
+                android:id="@+id/oneClickBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="One-Click: OFF"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:id="@+id/bidText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Bid: --"
+                android:textColor="#d1d4dc"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/askText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Ask: --"
+                android:textColor="#d1d4dc"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/spreadText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Spr: --"
+                android:textColor="#8aa0c6"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <Button
+                android:id="@+id/lotsMinusBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="−"/>
+
+            <TextView
+                android:id="@+id/lotsText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Lots: 1.00"
+                android:textColor="#d1d4dc"/>
+
+            <Button
+                android:id="@+id/lotsPlusBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+            <Button
+                android:id="@+id/buyBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="BUY"/>
+
+            <Button
+                android:id="@+id/sellBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="SELL"
+                android:layout_marginStart="10dp"/>
+        </LinearLayout>
+
+        <!-- Drawing Toolbar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+            <Button
+                android:id="@+id/drawOffBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Select"/>
+
+            <Button
+                android:id="@+id/drawHLineBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="HLine"
+                android:layout_marginStart="8dp"/>
+
+            <Button
+                android:id="@+id/drawTrendBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Trend"
+                android:layout_marginStart="8dp"/>
+
+            <Button
+                android:id="@+id/drawClearBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Clear"
+                android:layout_marginStart="8dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <Button
+                android:id="@+id/drawEditBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Edit"/>
+
+            <Button
+                android:id="@+id/drawLockBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Lock/Unlock"
+                android:layout_marginStart="10dp"/>
+
+            <Button
+                android:id="@+id/drawDeleteBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Delete"
+                android:layout_marginStart="10dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Chart -->
+    <WebView
+        android:id="@+id/chartWebView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <!-- Replay Controls -->
+    <LinearLayout
+        android:id="@+id/replayBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="horizontal"
+        android:background="#121a2b">
+
+        <Button
+            android:id="@+id/replayToggleBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Replay: OFF"/>
+
+        <Button
+            android:id="@+id/replayPlayPauseBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Play"
+            android:layout_marginStart="10dp"/>
+
+        <Spinner
+            android:id="@+id/replaySpeedSpinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="10dp"
+            android:background="#0b1220"/>
+
+        <TextView
+            android:id="@+id/replayStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="--"
+            android:textColor="#8aa0c6"
+            android:layout_marginStart="10dp"/>
+    </LinearLayout>
+
+</LinearLayout>

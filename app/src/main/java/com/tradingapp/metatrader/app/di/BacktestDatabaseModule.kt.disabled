@@ -1,0 +1,32 @@
+package com.tradingapp.metatrader.app.di
+
+import android.content.Context
+import androidx.room.Room
+import com.tradingapp.metatrader.data.local.backtestdb.BacktestRoomDatabase
+import com.tradingapp.metatrader.data.local.backtestdb.dao.CandleDao
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
+
+@Module
+@InstallIn(SingletonComponent::class)
+object BacktestDatabaseModule {
+
+    @Provides
+    @Singleton
+    fun provideBacktestDb(@ApplicationContext ctx: Context): BacktestRoomDatabase {
+        return Room.databaseBuilder(
+            ctx,
+            BacktestRoomDatabase::class.java,
+            "backtest_candles.db"
+        )
+            .fallbackToDestructiveMigration()
+            .build()
+    }
+
+    @Provides
+    fun provideCandleDao(db: BacktestRoomDatabase): CandleDao = db.candleDao()
+}

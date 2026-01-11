@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:background="#121a2b"
+    android:layout_marginBottom="10dp">
+
+    <TextView
+        android:id="@+id/symbol"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gold"
+        android:textColor="#d1d4dc"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/instrument"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="XAU_USD"
+        android:textColor="#8aa0c6"
+        android:textSize="12sp"/>
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="--"
+        android:textColor="#d1d4dc"
+        android:textSize="14sp"
+        android:layout_marginTop="6dp"/>
+
+</LinearLayout>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#0b1220">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="14dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Strategy Settings"
+            android:textColor="#d1d4dc"
+            android:textSize="18sp"/>
+
+        <EditText
+            android:id="@+id/riskPercentInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Risk %"
+            android:inputType="numberDecimal"
+            android:background="#121a2b"
+            android:textColor="#d1d4dc"
+            android:padding="12dp"
+            android:layout_marginTop="12dp"/>
+
+        <EditText
+            android:id="@+id/atrPeriodInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ATR Period"
+            android:inputType="number"
+            android:background="#121a2b"
+            android:textColor="#d1d4dc"
+            android:padding="12dp"
+            android:layout_marginTop="10dp"/>
+
+        <EditText
+            android:id="@+id/slAtrMultInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="SL ATR Multiplier"
+            android:inputType="numberDecimal"
+            android:background="#121a2b"
+            android:textColor="#d1d4dc"
+            android:padding="12dp"
+            android:layout_marginTop="10dp"/>
+
+        <EditText
+            android:id="@+id/tpAtrMultInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="TP ATR Multiplier"
+            android:inputType="numberDecimal"
+            android:background="#121a2b"
+            android:textColor="#d1d4dc"
+            android:padding="12dp"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Signal Parameters"
+            android:textColor="#d1d4dc"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp"/>
+
+        <EditText
+            android:id="@+id/emaFastInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="EMA Fast (e.g. 50)"
+            android:inputType="number"
+            android:background="#121a2b"
+            android:textColor="#d1d4dc"
+            android:padding="12dp"
+            android:layout_marginTop="10dp"/>
+
+        <EditText
+            android:id="@+id/emaSlowInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="EMA Slow (e.g. 150)"
+            android:inputType="number"
+            android:background="#121a2b"
+            android:textColor="#d1d4dc"
+            android:padding="12dp"
+            android:layout_marginTop="10dp"/>
+
+        <EditText
+            android:id="@+id/stochPeriodInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Stoch Period (e.g. 14)"
+            android:inputType="number"
+            android:background="#121a2b"
+            android:textColor="#d1d4dc"
+            android:padding="12dp"
+            android:layout_marginTop="10dp"/>
+
+        <EditText
+            android:id="@+id/stochTriggerInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Stoch Trigger (e.g. 20)"
+            android:inputType="numberDecimal"
+            android:background="#121a2b"
+            android:textColor="#d1d4dc"
+            android:padding="12dp"
+            android:layout_marginTop="10dp"/>
+
+        <Button
+            android:id="@+id/saveBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:layout_marginTop="14dp"/>
+
+        <TextView
+            android:id="@+id/statusText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="--"
+            android:textColor="#8aa0c6"
+            android:layout_marginTop="10dp"/>
+
+    </LinearLayout>
+</ScrollView>

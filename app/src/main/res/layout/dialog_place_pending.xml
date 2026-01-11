@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#0b1220"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Place Pending Order"
+            android:textColor="#d1d4dc"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <Spinner
+            android:id="@+id/typeSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"/>
+
+        <EditText
+            android:id="@+id/lotsEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Lots (e.g. 0.10)"
+            android:inputType="numberDecimal"
+            android:textColor="#d1d4dc"
+            android:textColorHint="#456"
+            android:backgroundTint="#203050"/>
+
+        <EditText
+            android:id="@+id/entryEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="Entry price"
+            android:inputType="numberDecimal"
+            android:textColor="#d1d4dc"
+            android:textColorHint="#456"
+            android:backgroundTint="#203050"/>
+
+        <EditText
+            android:id="@+id/slEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="Stop Loss (optional)"
+            android:inputType="numberDecimal"
+            android:textColor="#d1d4dc"
+            android:textColorHint="#456"
+            android:backgroundTint="#203050"/>
+
+        <EditText
+            android:id="@+id/tpEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="Take Profit (optional)"
+            android:inputType="numberDecimal"
+            android:textColor="#d1d4dc"
+            android:textColorHint="#456"
+            android:backgroundTint="#203050"/>
+
+        <EditText
+            android:id="@+id/commentEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="Comment (optional)"
+            android:inputType="text"
+            android:textColor="#d1d4dc"
+            android:textColorHint="#456"
+            android:backgroundTint="#203050"/>
+    </LinearLayout>
+</ScrollView>

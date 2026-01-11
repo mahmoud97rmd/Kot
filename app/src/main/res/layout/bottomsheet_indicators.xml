@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#0b1220"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Indicators Settings"
+        android:textColor="#d1d4dc"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="EMA Periods (comma-separated)"
+        android:textColor="#8aa0c6"
+        android:layout_marginTop="12dp"/>
+
+    <EditText
+        android:id="@+id/emaEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="20,50"
+        android:inputType="text"
+        android:textColor="#d1d4dc"
+        android:textColorHint="#456"
+        android:backgroundTint="#203050"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Stochastic K / D"
+        android:textColor="#8aa0c6"
+        android:layout_marginTop="12dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/stochKEdit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="K=14"
+            android:inputType="number"
+            android:textColor="#d1d4dc"
+            android:textColorHint="#456"
+            android:backgroundTint="#203050"/>
+
+        <EditText
+            android:id="@+id/stochDEdit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="10dp"
+            android:hint="D=3"
+            android:inputType="number"
+            android:textColor="#d1d4dc"
+            android:textColorHint="#456"
+            android:backgroundTint="#203050"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/applyBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Apply"/>
+
+        <Button
+            android:id="@+id/cancelBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="10dp"
+            android:text="Cancel"/>
+    </LinearLayout>
+</LinearLayout>

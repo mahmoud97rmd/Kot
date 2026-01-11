@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Equity/Balance</title>
+  <style>
+    html, body { margin:0; padding:0; background:#0b1220; height:100%; width:100%; }
+    #container { position:absolute; left:0; top:0; right:0; bottom:0; }
+  </style>
+  <script src="../chart/lightweight-charts.js"></script>
+</head>
+<body>
+  <div id="container"></div>
+  <script>
+    const container = document.getElementById('container');
+
+    const chart = LightweightCharts.createChart(container, {
+      layout: { background: { color: '#0b1220' }, textColor: '#d1d4dc' },
+      grid: { vertLines: { color: '#1f2a44' }, horzLines: { color: '#1f2a44' } },
+      rightPriceScale: { borderColor: '#1f2a44' },
+      timeScale: { borderColor: '#1f2a44', timeVisible: true, secondsVisible: false },
+      crosshair: { mode: LightweightCharts.CrosshairMode.Magnet },
+    });
+
+    const equitySeries = chart.addLineSeries({
+      color: '#4caf50',
+      lineWidth: 2,
+    });
+
+    const balanceSeries = chart.addLineSeries({
+      color: '#ffd54f',
+      lineWidth: 2,
+    });
+
+    let mode = "EQUITY"; // or BALANCE
+
+    function fit() {
+      try { chart.timeScale().fitContent(); } catch(e) {}
+    }
+
+    window.setEquity = function(points) {
+      equitySeries.setData(points || []);
+      fit();
+    }
+
+    window.setBalance = function(points) {
+      balanceSeries.setData(points || []);
+      fit();
+    }
+
+    window.setMode = function(m) {
+      mode = (m === "BALANCE") ? "BALANCE" : "EQUITY";
+      if (mode === "EQUITY") {
+        equitySeries.applyOptions({ visible: true });
+        balanceSeries.applyOptions({ visible: false });
+      } else {
+        equitySeries.applyOptions({ visible: false });
+        balanceSeries.applyOptions({ visible: true });
+      }
+    }
+
+    // default show equity
+    window.setMode("EQUITY");
+
+    window.addEventListener('resize', () => {
+      chart.applyOptions({ width: container.clientWidth, height: container.clientHeight });
+    });
+    chart.applyOptions({ width: container.clientWidth, height: container.clientHeight });
+  </script>
+</body>
+</html>

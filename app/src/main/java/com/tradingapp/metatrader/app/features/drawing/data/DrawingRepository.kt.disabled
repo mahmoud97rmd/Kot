@@ -1,0 +1,26 @@
+package com.tradingapp.metatrader.app.features.drawing.data
+
+import com.tradingapp.metatrader.app.data.local.database.dao.DrawingDao
+import com.tradingapp.metatrader.app.data.mappers.DrawingMapper
+import com.tradingapp.metatrader.app.features.drawing.model.DrawingObject
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+class DrawingRepository @Inject constructor(
+    private val dao: DrawingDao
+) {
+    suspend fun load(symbol: String, timeframe: String): List<DrawingObject> {
+        return dao.load(symbol, timeframe)
+            .mapNotNull { DrawingMapper.toDomain(it) }
+    }
+
+    /**
+     * Snapshot save: delete all for chart then insert all (simple & robust).
+     */
+    suspend fun saveSnapshot(symbol: String, timeframe: String, items: List<DrawingObject>) {
+        dao.deleteForChart(symbol, timeframe)
+        val now = System.currentTimeMillis()
+        dao.upsertAll(items.map { DrawingMapper.toEntity(it, now) })
+    }
+}

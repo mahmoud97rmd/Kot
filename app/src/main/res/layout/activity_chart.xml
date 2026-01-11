@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0b1220"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/titleText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="XAU_USD • M1"
+        android:textColor="#d1d4dc"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/subText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="AutoTrading: OFF | EA: (none)"
+        android:textColor="#8aa0c6"
+        android:layout_marginTop="4dp"/>
+
+    <TextView
+        android:id="@+id/statusText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Status: Idle"
+        android:textColor="#8aa0c6"
+        android:layout_marginTop="6dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
+
+        <Button android:id="@+id/connectBtn" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Connect"/>
+        <Button android:id="@+id/replayBtn" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="8dp" android:text="Replay"/>
+        <Button android:id="@+id/autoBtn" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="8dp" android:text="Auto: OFF"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
+
+        <Button android:id="@+id/attachBtn" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Attach EA"/>
+        <Button android:id="@+id/propsBtn" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="8dp" android:text="Properties"/>
+        <Button android:id="@+id/orderBtn" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="8dp" android:text="Order"/>
+        <Button android:id="@+id/oandaBtn" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="8dp" android:text="OANDA"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
+
+        <Button android:id="@+id/toolNoneBtn" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Pan"/>
+        <Button android:id="@+id/toolTrendBtn" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="8dp" android:text="Trend"/>
+        <Button android:id="@+id/toolHLineBtn" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="8dp" android:text="HLine"/>
+        <Button android:id="@+id/toolMoveBtn" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="8dp" android:text="Move"/>
+        <Button android:id="@+id/indicatorsBtn" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="8dp" android:text="Ind"/>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="10dp">
+
+        <com.tradingapp.metatrader.app.features.chart.webview.ChartWebView
+            android:id="@+id/chartWebView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.tradingapp.metatrader.app.features.drawing.ui.DrawingOverlayView
+            android:id="@+id/drawingOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
+
+        <Button android:id="@+id/chartsBtn" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Charts"/>
+        <Button android:id="@+id/journalBtn" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="8dp" android:text="Journal"/>
+        <Button android:id="@+id/expertsBtn" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="8dp" android:text="Experts"/>
+    </LinearLayout>
+
+</LinearLayout>

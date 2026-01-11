@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Backtest Chart</title>
+  <style>
+    html, body { margin:0; padding:0; background:#0b1220; height:100%; width:100%; }
+    #container { position:absolute; left:0; top:0; right:0; bottom:0; }
+  </style>
+  <script src="../chart/lightweight-charts.js"></script>
+</head>
+<body>
+  <div id="container"></div>
+
+  <script>
+    const container = document.getElementById('container');
+
+    const chart = LightweightCharts.createChart(container, {
+      layout: { background: { color: '#0b1220' }, textColor: '#d1d4dc' },
+      grid: { vertLines: { color: '#1f2a44' }, horzLines: { color: '#1f2a44' } },
+      rightPriceScale: { borderColor: '#1f2a44' },
+      timeScale: { borderColor: '#1f2a44', timeVisible: true, secondsVisible: false },
+      crosshair: { mode: LightweightCharts.CrosshairMode.Magnet },
+    });
+
+    const candleSeries = chart.addCandlestickSeries({
+      upColor: '#26a69a',
+      downColor: '#ef5350',
+      borderUpColor: '#26a69a',
+      borderDownColor: '#ef5350',
+      wickUpColor: '#26a69a',
+      wickDownColor: '#ef5350',
+    });
+
+    let markersVisible = true;
+    let lastMarkers = [];
+    let slLine = null;
+    let tpLine = null;
+
+    // store candles for replay scrolling
+    let candlesData = [];
+
+    function _fit() {
+      try { chart.timeScale().fitContent(); } catch(e) {}
+    }
+
+    function _clearLines() {
+      try { if (slLine) candleSeries.removePriceLine(slLine); } catch(e) {}
+      try { if (tpLine) candleSeries.removePriceLine(tpLine); } catch(e) {}
+      slLine = null;
+      tpLine = null;
+    }
+
+    window.setHistory = function(candles) {
+      candlesData = candles || [];
+      candleSeries.setData(candlesData);
+      _fit();
+      if (markersVisible && lastMarkers.length > 0) {
+        candleSeries.setMarkers(lastMarkers);
+      }
+    }
+
+    window.setMarkers = function(markers) {
+      lastMarkers = markers || [];
+      if (markersVisible) {
+        candleSeries.setMarkers(lastMarkers);
+      }
+    }
+
+    window.clearMarkers = function() {
+      lastMarkers = [];
+      candleSeries.setMarkers([]);
+    }
+
+    window.setMarkersVisible = function(visible) {
+      markersVisible = !!visible;
+      if (markersVisible) candleSeries.setMarkers(lastMarkers);
+      else candleSeries.setMarkers([]);
+    }
+
+    window.showTradeLevels = function(slPrice, tpPrice) {
+      _clearLines();
+      if (slPrice && slPrice > 0) {
+        slLine = candleSeries.createPriceLine({
+          price: slPrice,
+          color: '#ef5350',
+          lineWidth: 2,
+          lineStyle: LightweightCharts.LineStyle.Dashed,
+          axisLabelVisible: true,
+          title: 'SL'
+        });
+      }
+      if (tpPrice && tpPrice > 0) {
+        tpLine = candleSeries.createPriceLine({
+          price: tpPrice,
+          color: '#4caf50',
+          lineWidth: 2,
+          lineStyle: LightweightCharts.LineStyle.Dashed,
+          axisLabelVisible: true,
+          title: 'TP'
+        });
+      }
+    }
+
+    window.clearTradeLevels = function() { _clearLines(); }
+
+    // Replay: scroll to a given time and show last N bars
+    window.replayTo = function(timeSec, barsBack) {
+      try {
+        if (!candlesData || candlesData.length === 0) return;
+        const n = candlesData.length;
+        const back = Math.max(20, Math.min(500, barsBack || 120));
+
+        // find index (linear; ok for 5k; could be binary if needed)
+        let idx = -1;
+        for (let i = 0; i < n; i++) {
+          if (candlesData[i].time >= timeSec) { idx = i; break; }
+        }
+        if (idx < 0) idx = n - 1;
+
+        const fromIdx = Math.max(0, idx - back);
+        const toIdx = Math.min(n - 1, idx + 2);
+
+        const from = candlesData[fromIdx].time;
+        const to = candlesData[toIdx].time;
+
+        chart.timeScale().setVisibleRange({ from, to });
+      } catch(e) {}
+    }
+
+    chart.subscribeClick((param) => {
+      try {
+        if (!param || !param.time) return;
+        const t = param.time;
+        if (window.Android && window.Android.onChartClick) {
+          window.Android.onChartClick(String(t));
+        }
+      } catch (e) {}
+    });
+
+    window.addEventListener('resize', () => {
+      chart.applyOptions({ width: container.clientWidth, height: container.clientHeight });
+    });
+    chart.applyOptions({ width: container.clientWidth, height: container.clientHeight });
+  </script>
+</body>
+</html>

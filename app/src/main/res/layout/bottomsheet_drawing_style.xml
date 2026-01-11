@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#0b1220"
+    android:orientation="vertical"
+    android:padding="14dp">
+
+    <TextView
+        android:id="@+id/titleText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Drawing Style"
+        android:textColor="#d1d4dc"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/infoText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="--"
+        android:textColor="#8aa0c6"
+        android:layout_marginTop="8dp"/>
+
+    <EditText
+        android:id="@+id/colorHexInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="#RRGGBB"
+        android:inputType="text"
+        android:background="#121a2b"
+        android:textColor="#d1d4dc"
+        android:padding="12dp"
+        android:layout_marginTop="12dp"/>
+
+    <EditText
+        android:id="@+id/widthInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Line width (e.g. 2)"
+        android:inputType="numberDecimal"
+        android:background="#121a2b"
+        android:textColor="#d1d4dc"
+        android:padding="12dp"
+        android:layout_marginTop="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="12dp">
+
+        <Button
+            android:id="@+id/applyBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Apply"/>
+
+        <Button
+            android:id="@+id/lockBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Lock/Unlock"
+            android:layout_marginStart="10dp"/>
+
+        <Button
+            android:id="@+id/deleteBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Delete"
+            android:layout_marginStart="10dp"/>
+    </LinearLayout>
+
+</LinearLayout>

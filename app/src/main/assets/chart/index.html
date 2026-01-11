@@ -1,0 +1,189 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <style>
+    html, body { margin:0; padding:0; background:#0b1220; height:100%; }
+    #root { display:flex; flex-direction:column; height:100%; width:100%; }
+    #chartMain { flex: 7; }
+    #chartStoch { flex: 3; border-top: 1px solid #203050; }
+  </style>
+</head>
+<body>
+<div id="root">
+  <div id="chartMain"></div>
+  <div id="chartStoch"></div>
+</div>
+
+<script src="lightweight-charts.js"></script>
+<script>
+  // ---------- Theme ----------
+  const theme = {
+    layout: { background: { color: '#0b1220' }, textColor: '#d1d4dc' },
+    grid: { vertLines: { color: '#203050' }, horzLines: { color: '#203050' } },
+    timeScale: { borderColor: '#203050' },
+    rightPriceScale: { borderColor: '#203050' },
+    crosshair: { mode: 0 },
+  };
+
+  // ---------- Main chart ----------
+  const main = LightweightCharts.createChart(document.getElementById('chartMain'), {
+    ...theme,
+    width: window.innerWidth,
+    height: Math.floor(window.innerHeight * 0.7),
+  });
+
+  const candlesSeries = main.addCandlestickSeries({
+    upColor: '#26a69a', downColor: '#ef5350',
+    borderUpColor: '#26a69a', borderDownColor: '#ef5350',
+    wickUpColor: '#26a69a', wickDownColor: '#ef5350',
+  });
+
+  // EMA series map: period -> lineSeries
+  const emaMap = new Map();
+
+  function ensureEma(period, color) {
+    const key = String(period);
+    if (emaMap.has(key)) return;
+    const s = main.addLineSeries({ color: color || '#2962FF', lineWidth: 2 });
+    emaMap.set(key, s);
+  }
+
+  function clearIndicators() {
+    for (const [k, s] of emaMap.entries()) {
+      main.removeSeries(s);
+    }
+    emaMap.clear();
+    stochK.setData([]);
+    stochD.setData([]);
+  }
+
+  // ---------- Stochastic subwindow chart ----------
+  const stoch = LightweightCharts.createChart(document.getElementById('chartStoch'), {
+    ...theme,
+    width: window.innerWidth,
+    height: Math.floor(window.innerHeight * 0.3),
+    rightPriceScale: {
+      borderColor: '#203050',
+      scaleMargins: { top: 0.2, bottom: 0.2 }
+    }
+  });
+
+  const stochK = stoch.addLineSeries({ color: '#f5c542', lineWidth: 2 });
+  const stochD = stoch.addLineSeries({ color: '#8aa0c6', lineWidth: 2 });
+
+  function addStochRefs() {
+    try {
+      stochK.createPriceLine({ price: 80, color: '#203050', lineWidth: 1, lineStyle: 2, axisLabelVisible: true });
+      stochK.createPriceLine({ price: 20, color: '#203050', lineWidth: 1, lineStyle: 2, axisLabelVisible: true });
+    } catch (_) {}
+  }
+  addStochRefs();
+
+  // Keep both charts synced on time range
+  main.timeScale().subscribeVisibleTimeRangeChange(range => {
+    if (range) stoch.timeScale().setVisibleRange(range);
+  });
+
+  // Resize handling
+  window.addEventListener('resize', () => {
+    main.applyOptions({ width: window.innerWidth, height: Math.floor(window.innerHeight * 0.7) });
+    stoch.applyOptions({ width: window.innerWidth, height: Math.floor(window.innerHeight * 0.3) });
+  });
+
+  // ---------- Kotlin bridge API (candles + indicators) ----------
+  function setHistory(data) { candlesSeries.setData(data); }
+  function updateLastCandle(c) { candlesSeries.update(c); }
+
+  function setEmaHistory(period, points) {
+    ensureEma(period, '#2962FF');
+    const s = emaMap.get(String(period));
+    s.setData(points);
+  }
+  function updateEmaPoint(period, point) {
+    ensureEma(period, '#2962FF');
+    const s = emaMap.get(String(period));
+    s.update(point);
+  }
+
+  function setStochHistory(kPoints, dPoints) {
+    stochK.setData(kPoints || []);
+    stochD.setData(dPoints || []);
+  }
+  function updateStochPoint(kPoint, dPoint) {
+    if (kPoint) stochK.update(kPoint);
+    if (dPoint) stochD.update(dPoint);
+  }
+
+  // ---------- Drawing bridge: viewport + coordinate conversion ----------
+  function getViewportSnapshot() {
+    try {
+      const tr = main.timeScale().getVisibleRange();
+      // price scale range; some versions expose getVisibleRange()
+      let pr = null;
+      try {
+        pr = candlesSeries.priceScale().getVisibleRange();
+      } catch (e1) {
+        try {
+          pr = main.priceScale('right').getVisibleRange();
+        } catch (e2) { pr = null; }
+      }
+
+      if (!tr || !pr) return null;
+
+      return {
+        minTime: tr.from,
+        maxTime: tr.to,
+        minPrice: pr.minValue,
+        maxPrice: pr.maxValue
+      };
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function sendViewport() {
+    const snap = getViewportSnapshot();
+    if (!snap) return;
+    try {
+      if (window.Android && window.Android.onViewport) {
+        window.Android.onViewport(JSON.stringify(snap));
+      }
+    } catch (_) {}
+  }
+
+  // send periodically + on interactions
+  setInterval(sendViewport, 400);
+  main.timeScale().subscribeVisibleTimeRangeChange(_ => sendViewport());
+
+  // Convert screen coordinates (x,y) to time+price using chart APIs
+  function requestCoordToValue(reqId, x, y) {
+    try {
+      const time = main.timeScale().coordinateToTime(x);
+      const price = candlesSeries.coordinateToPrice(y);
+      const out = { time: time, price: price };
+      if (window.Android && window.Android.onCoordResult) {
+        window.Android.onCoordResult(String(reqId), JSON.stringify(out));
+      }
+    } catch (e) {
+      if (window.Android && window.Android.onCoordResult) {
+        window.Android.onCoordResult(String(reqId), JSON.stringify({ error: String(e) }));
+      }
+    }
+  }
+
+  // Expose globally
+  window.setHistory = setHistory;
+  window.updateLastCandle = updateLastCandle;
+  window.ensureEma = ensureEma;
+  window.setEmaHistory = setEmaHistory;
+  window.updateEmaPoint = updateEmaPoint;
+  window.setStochHistory = setStochHistory;
+  window.updateStochPoint = updateStochPoint;
+  window.clearIndicators = clearIndicators;
+
+  window.requestCoordToValue = requestCoordToValue;
+</script>
+</body>
+</html>

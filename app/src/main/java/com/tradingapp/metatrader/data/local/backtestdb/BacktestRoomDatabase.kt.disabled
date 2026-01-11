@@ -1,0 +1,15 @@
+package com.tradingapp.metatrader.data.local.backtestdb
+
+import androidx.room.Database
+import androidx.room.RoomDatabase
+import com.tradingapp.metatrader.data.local.backtestdb.dao.CandleDao
+import com.tradingapp.metatrader.data.local.backtestdb.entities.CandleEntity
+
+@Database(
+    entities = [CandleEntity::class],
+    version = 1,
+    exportSchema = true
+)
+abstract class BacktestRoomDatabase : RoomDatabase() {
+    abstract fun candleDao(): CandleDao
+}

@@ -1,0 +1,266 @@
+package com.tradingapp.metatrader.app.features.expert.runtime
+
+import app.cash.quickjs.QuickJs
+import com.tradingapp.metatrader.app.features.expert.runtime.bridge.ExpertCall
+import com.tradingapp.metatrader.app.features.expert.runtime.bridge.ExpertCallResult
+import java.util.concurrent.atomic.AtomicBoolean
+import org.json.JSONArray
+import org.json.JSONObject
+
+class ExpertRuntime : AutoCloseable {
+
+    private val closed = AtomicBoolean(false)
+    private val qjs: QuickJs = QuickJs.create()
+
+    init {
+        ensureOpen()
+
+        // Base "mt" object + call queue + results map.
+        // JS side never touches Android directly.
+        qjs.evaluate(
+            """
+            (function() {
+              function uuid() {
+                // lightweight id generator
+                return (Date.now().toString(36) + Math.random().toString(36).slice(2));
+              }
+
+              globalThis.mt = {
+                __calls: [],
+                __results: {},
+                __snapshot: {
+                  symbol: "XAU_USD",
+                  timeframe: "M1",
+                  nowSec: 0,
+                  bid: 0,
+                  ask: 0,
+                  positionsTotal: 0
+                },
+
+                // ---- getters ----
+                symbol: function(){ return this.__snapshot.symbol; },
+                timeframe: function(){ return this.__snapshot.timeframe; },
+                nowSec: function(){ return this.__snapshot.nowSec; },
+                lastBid: function(){ return this.__snapshot.bid; },
+                lastAsk: function(){ return this.__snapshot.ask; },
+                positionsTotal: function(){ return this.__snapshot.positionsTotal; },
+
+                // ---- logging ----
+                log: function(level, message){
+                  var id = uuid();
+                  this.__calls.push({ type: "log", id: id, level: String(level), message: String(message) });
+                  return id;
+                },
+
+                // ---- trading ----
+                orderSend: function(side, lots, sl, tp, comment){
+                  var id = uuid();
+                  var s = String(side);
+                  var l = Number(lots);
+                  var hasSl = (sl !== null && sl !== undefined);
+                  var hasTp = (tp !== null && tp !== undefined);
+                  this.__calls.push({
+                    type: "orderSend",
+                    id: id,
+                    side: s,
+                    lots: l,
+                    sl: hasSl ? Number(sl) : null,
+                    tp: hasTp ? Number(tp) : null,
+                    comment: (comment === null || comment === undefined) ? null : String(comment)
+                  });
+                  return id; // requestId
+                },
+
+                positionClose: function(positionId){
+                  var id = uuid();
+                  this.__calls.push({ type: "positionClose", id: id, positionId: String(positionId) });
+                  return id;
+                },
+
+                // ---- results ----
+                // returns {ok:true, value:...} or {ok:false, error:"..."} or null if not ready
+                result: function(requestId){
+                  var r = this.__results[String(requestId)];
+                  return (r === undefined) ? null : r;
+                },
+
+                // optional helper: clear a result
+                clearResult: function(requestId){
+                  delete this.__results[String(requestId)];
+                }
+              };
+            })();
+            """.trimIndent()
+        )
+    }
+
+    fun load(scriptCode: String) {
+        ensureOpen()
+        qjs.evaluate(scriptCode)
+        callIfExists0("OnInit")
+    }
+
+    fun deinit() {
+        ensureOpen()
+        callIfExists0("OnDeinit")
+    }
+
+    fun onTick(snapshot: ExpertSnapshot) {
+        ensureOpen()
+        injectSnapshot(snapshot)
+        callIfExists0("OnTick")
+    }
+
+    fun onBar(snapshot: ExpertSnapshot, barTimeSec: Long, o: Double, h: Double, l: Double, c: Double) {
+        ensureOpen()
+        injectSnapshot(snapshot)
+        callIfExistsN("OnBar", listOf(barTimeSec, o, h, l, c))
+    }
+
+    /**
+     * Returns and clears queued calls from mt.__calls.
+     */
+    fun drainCalls(): List<ExpertCall> {
+        ensureOpen()
+        val json = qjs.evaluate(
+            """
+            (function(){
+              var calls = globalThis.mt.__calls;
+              globalThis.mt.__calls = [];
+              return JSON.stringify(calls);
+            })();
+            """.trimIndent()
+        ) as String
+
+        if (json.isBlank() || json == "[]") return emptyList()
+
+        val arr = JSONArray(json)
+        val out = ArrayList<ExpertCall>(arr.length())
+
+        for (i in 0 until arr.length()) {
+            val o = arr.getJSONObject(i)
+            val type = o.optString("type")
+            val id = o.optString("id")
+
+            when (type) {
+                "log" -> {
+                    out.add(
+                        ExpertCall.Log(
+                            id = id,
+                            level = o.optString("level", "INFO"),
+                            message = o.optString("message", "")
+                        )
+                    )
+                }
+                "orderSend" -> {
+                    out.add(
+                        ExpertCall.OrderSend(
+                            id = id,
+                            side = o.optString("side", "BUY"),
+                            lots = o.optDouble("lots", 0.0),
+                            sl = if (o.isNull("sl")) null else o.optDouble("sl"),
+                            tp = if (o.isNull("tp")) null else o.optDouble("tp"),
+                            comment = if (o.isNull("comment")) null else o.optString("comment")
+                        )
+                    )
+                }
+                "positionClose" -> {
+                    out.add(
+                        ExpertCall.PositionClose(
+                            id = id,
+                            positionId = o.optString("positionId", "")
+                        )
+                    )
+                }
+            }
+        }
+
+        return out
+    }
+
+    /**
+     * Push results into mt.__results[requestId] = {ok:true,value:...} or {ok:false,error:"..."}
+     * valueJson must be JSON (e.g. "\"posId\"" or "true" or "{...}").
+     */
+    fun pushResults(results: List<ExpertCallResult>) {
+        ensureOpen()
+        if (results.isEmpty()) return
+
+        val assignments = StringBuilder()
+        for (r in results) {
+            when (r) {
+                is ExpertCallResult.Ok -> {
+                    assignments.append("globalThis.mt.__results[")
+                        .append(json(r.id))
+                        .append("] = { ok: true, value: ")
+                        .append(r.valueJson)
+                        .append(" };")
+                }
+                is ExpertCallResult.Error -> {
+                    assignments.append("globalThis.mt.__results[")
+                        .append(json(r.id))
+                        .append("] = { ok: false, error: ")
+                        .append(json(r.message))
+                        .append(" };")
+                }
+            }
+        }
+
+        qjs.evaluate("(function(){ $assignments })();")
+    }
+
+    override fun close() {
+        if (closed.compareAndSet(false, true)) {
+            runCatching { qjs.close() }
+        }
+    }
+
+    private fun injectSnapshot(s: ExpertSnapshot) {
+        val js = """
+            (function(){
+              globalThis.mt.__snapshot = {
+                symbol: ${json(s.symbol)},
+                timeframe: ${json(s.timeframe)},
+                nowSec: ${s.nowSec},
+                bid: ${s.bid},
+                ask: ${s.ask},
+                positionsTotal: ${s.positionsTotal}
+              };
+            })();
+        """.trimIndent()
+        qjs.evaluate(js)
+    }
+
+    private fun callIfExists0(fn: String) {
+        qjs.evaluate("if (typeof $fn === 'function') { $fn(); }")
+    }
+
+    private fun callIfExistsN(fn: String, args: List<Any>) {
+        val jsArgs = args.joinToString(",") { a ->
+            when (a) {
+                is Long -> a.toString()
+                is Int -> a.toString()
+                is Double -> a.toString()
+                is String -> json(a)
+                else -> "null"
+            }
+        }
+        qjs.evaluate("if (typeof $fn === 'function') { $fn($jsArgs); }")
+    }
+
+    private fun ensureOpen() {
+        check(!closed.get()) { "ExpertRuntime is closed" }
+    }
+
+    private fun json(s: String): String =
+        "\"" + s.replace("\\", "\\\\").replace("\"", "\\\"") + "\""
+}
+
+data class ExpertSnapshot(
+    val symbol: String,
+    val timeframe: String,
+    val nowSec: Long,
+    val bid: Double,
+    val ask: Double,
+    val positionsTotal: Int
+)

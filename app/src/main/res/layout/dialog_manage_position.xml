@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#0b1220"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/posTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Manage Position"
+        android:textColor="#d1d4dc"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/slEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:hint="New SL (empty = no change)"
+        android:inputType="numberDecimal"
+        android:textColor="#d1d4dc"
+        android:textColorHint="#456"
+        android:backgroundTint="#203050"/>
+
+    <EditText
+        android:id="@+id/tpEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="New TP (empty = no change)"
+        android:inputType="numberDecimal"
+        android:textColor="#d1d4dc"
+        android:textColorHint="#456"
+        android:backgroundTint="#203050"/>
+
+    <EditText
+        android:id="@+id/closeLotsEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="Close lots (e.g. 0.10)"
+        android:inputType="numberDecimal"
+        android:textColor="#d1d4dc"
+        android:textColorHint="#456"
+        android:backgroundTint="#203050"/>
+
+</LinearLayout>

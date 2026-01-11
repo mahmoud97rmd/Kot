@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+هذا ملف “مثال” فقط إن احتجته.
+إذا عندك activity_strategy_tester.xml موجود بالفعل، لا تستبدله.
+فقط أضف زر:
+<Button android:id="@+id/exportBtn" ... text="Export CSV"/>
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"/>

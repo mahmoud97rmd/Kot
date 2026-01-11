@@ -1,0 +1,17 @@
+package com.tradingapp.metatrader.app.data.local.database
+
+import androidx.room.Database
+import androidx.room.RoomDatabase
+import com.tradingapp.metatrader.app.data.local.database.dao.DrawingDao
+import com.tradingapp.metatrader.app.data.local.database.entities.DrawingEntity
+
+@Database(
+    entities = [
+        DrawingEntity::class
+    ],
+    version = 1,
+    exportSchema = true
+)
+abstract class DrawingRoomDatabase : RoomDatabase() {
+    abstract fun drawingDao(): DrawingDao
+}

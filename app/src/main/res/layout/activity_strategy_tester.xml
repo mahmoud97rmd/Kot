@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0b1220"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Strategy Tester (MT5-like)"
+        android:textColor="#d1d4dc"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/symbolEdit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Symbol (e.g., XAU_USD)"
+            android:inputType="text"
+            android:text="XAU_USD"
+            android:backgroundTint="#2a3a5a"
+            android:textColor="#d1d4dc"
+            android:textColorHint="#8aa0c6"/>
+
+        <EditText
+            android:id="@+id/timeframeEdit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="10dp"
+            android:hint="TF (M1/M5/H1)"
+            android:inputType="text"
+            android:text="M1"
+            android:backgroundTint="#2a3a5a"
+            android:textColor="#d1d4dc"
+            android:textColorHint="#8aa0c6"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/countEdit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="History Count (e.g., 2000)"
+            android:inputType="number"
+            android:text="2000"
+            android:backgroundTint="#2a3a5a"
+            android:textColor="#d1d4dc"
+            android:textColorHint="#8aa0c6"/>
+
+        <Button
+            android:id="@+id/downloadBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="10dp"
+            android:text="Download from OANDA" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Expert Script (DSL)"
+        android:textColor="#8aa0c6" />
+
+    <EditText
+        android:id="@+id/scriptEdit"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:layout_marginTop="6dp"
+        android:gravity="top|start"
+        android:inputType="textMultiLine"
+        android:textColor="#d1d4dc"
+        android:textColorHint="#8aa0c6"
+        android:hint="Paste EA DSL here..."
+        android:backgroundTint="#2a3a5a" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/runBacktestBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Run Backtest" />
+
+        <Button
+            android:id="@+id/visualModeBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="10dp"
+            android:text="Visual (Replay)" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/statusText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Status: Idle"
+        android:textColor="#8aa0c6" />
+
+    <TextView
+        android:id="@+id/reportText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Report will appear here"
+        android:textColor="#d1d4dc" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Trades"
+        android:textColor="#8aa0c6" />
+
+    <ListView
+        android:id="@+id/tradesList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="6dp"
+        android:layout_weight="1"
+        android:divider="#203050"
+        android:dividerHeight="1dp"
+        android:cacheColorHint="#0b1220" />
+
+</LinearLayout>

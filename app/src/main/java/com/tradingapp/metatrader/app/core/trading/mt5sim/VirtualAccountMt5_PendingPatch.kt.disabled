@@ -1,0 +1,8 @@
+package com.tradingapp.metatrader.app.core.trading.mt5sim
+
+/**
+ * Patch note:
+ * Update your VirtualAccountMt5.placePending signature to include timeframe.
+ */
+@Suppress("unused")
+object VirtualAccountMt5_PendingPatch

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="EA Inputs (JSON)"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/inputsEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:minLines="8"
+            android:gravity="top|start"
+            android:inputType="textMultiLine"
+            android:hint='Example: {"lots":1000,"tp":null,"sl":null}'
+            android:padding="10dp"/>
+    </LinearLayout>
+</ScrollView>
