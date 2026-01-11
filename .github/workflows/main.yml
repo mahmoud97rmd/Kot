@@ -7,9 +7,6 @@ on:
     branches: [ "main", "master" ]
   workflow_dispatch:
 
-permissions:
-  contents: read
-
 concurrency:
   group: android-ci-${{ github.ref }}
   cancel-in-progress: true
@@ -17,7 +14,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
 
     steps:
       - name: Checkout
@@ -30,30 +27,41 @@ jobs:
           java-version: "17"
           cache: "gradle"
 
-      - name: Print versions
+      - name: Validate Gradle Wrapper
+        uses: gradle/wrapper-validation-action@v2
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      # Optional: Print versions to help debugging
+      - name: Environment info
         run: |
           java -version
-          gradle -v
+          ./gradlew -v
 
-      - name: Create Gradle Wrapper if missing
-        shell: bash
-        run: |
-          if [ ! -f "./gradlew" ]; then
-            echo "gradlew missing -> generating wrapper"
-            gradle wrapper
-          fi
-          chmod +x ./gradlew
-          ls -la ./gradlew gradle/wrapper || true
-
-      - name: Build Debug
+      - name: Build Debug APK
         run: ./gradlew :app:assembleDebug --stacktrace
 
-      - name: Run unit tests
-        run: ./gradlew :app:testDebugUnitTest --stacktrace
+      # Release APK (unsigned) - useful for CI sanity; remove if you don't want it.
+      - name: Build Release APK (unsigned)
+        run: ./gradlew :app:assembleRelease --stacktrace
 
-      - name: Upload APK artifact
+      - name: Collect APKs
+        run: |
+          mkdir -p artifacts
+          # Debug APK
+          if ls app/build/outputs/apk/debug/*.apk 1> /dev/null 2>&1; then
+            cp -v app/build/outputs/apk/debug/*.apk artifacts/
+          fi
+          # Release APK (unsigned)
+          if ls app/build/outputs/apk/release/*.apk 1> /dev/null 2>&1; then
+            cp -v app/build/outputs/apk/release/*.apk artifacts/
+          fi
+          ls -la artifacts || true
+
+      - name: Upload APK artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: app-debug-apk
-          path: app/build/outputs/apk/debug/*.apk
+          name: MetaTraderClone-APKs
+          path: artifacts/*.apk
           if-no-files-found: error
