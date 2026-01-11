@@ -1,5 +1,6 @@
 package com.tradingapp.metatrader.domain.models.trading
 
+import com.tradingapp.metatrader.core.engine.backtest.SimpleBacktestEngine.Trade
 import java.time.Instant
 
 sealed class TradingEvent {
