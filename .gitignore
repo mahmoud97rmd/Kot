@@ -1,0 +1,39 @@
+# Gradle
+.gradle/
+build/
+**/build/
+
+# Local Gradle cache
+.gradle-cache/
+
+# Android
+*.apk
+*.aab
+*.ap_
+*.dex
+*.class
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Keystore (IMPORTANT)
+*.jks
+*.keystore
+
+# Local properties
+local.properties
+
+# Kotlin
+.kotlin/
+
+# Temporary / disabled files
+*.disabled
